@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denúncia de Problemas</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 20px; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+    <h1>Denuncie um Problema na Zona Rural</h1>
+    <p>Clique no botão abaixo para capturar sua localização e registrar uma denúncia.</p>
+    
+    <button onclick="getLocation()">Obter Localização</button>
+    <p id="location"></p>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "Geolocalização não suportada pelo navegador.";
+            }
+        }
+
+        function showPosition(position) {
+            let lat = position.coords.latitude;
+            let lon = position.coords.longitude;
+            document.getElementById("location").innerHTML = 
+                "Localização capturada: Latitude " + lat + ", Longitude " + lon;
+        }
+
+        function showError(error) {
+            switch(error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "Permissão de localização negada.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Informação de localização indisponível.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "Tempo de solicitação expirado.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "Erro desconhecido.";
+                    break;
+            }
+        }
+    </script>
+
+</body>
+</html>
+
